@@ -9,7 +9,7 @@ This guide does not include how to install Docker, WSL, etc. But there may be a 
 
 It is best to read through the act documentation (most of what you need to know can be found in the [act repo](https://github.com/nektos/act) README)
 
-But if you just want a quick-start (after installing of course), simply run `act push` after checking out this repo.
+But if you just want a quick-start (after installing of course), simply run `act push` after checking out this repo (assuming `act` is installed).
 
 Replace `push` with whatever action the workflow should trigger on. Also note what branch you are running on if the branch is important to triggering the workflow!
 
@@ -28,6 +28,7 @@ There is plenty of documentation on Github Actions, but just a tip for how to th
 * The type of environment you define will probably be something like `"ubuntu-latest"`. Just think of your github action code as running on any random Ubuntu machine.
 * If you can run it in Ubuntu, you can probably run it in github actions (eg: bash, python, C, etc). You just need to make sure it's installed.
 * The machine you specify doesn't have any special permissions that you don't have. It can only get permission to do things by providing it with service accounts (though secrets) and permissions on those accounts.
+<<<<<<< HEAD
 
 
 ### Running actions that require service accounts and such
