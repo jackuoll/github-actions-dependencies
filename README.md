@@ -9,7 +9,7 @@ This guide does not include how to install Docker, WSL, etc. But there may be a 
 
 It is best to read through the act documentation (most of what you need to know can be found in the [act repo](https://github.com/nektos/act) README)
 
-But if you just want a quick-start (after installing of course), simply run `act push` after checking out this repo.
+But if you just want a quick-start (after installing of course), simply run `act push` after checking out this repo (assuming `act` is installed).
 
 Replace `push` with whatever action the workflow should trigger on. Also note what branch you are running on if the branch is important to triggering the workflow!
 
