@@ -1,12 +1,8 @@
 name: Workflow Jobs
 
-
 on:
   workflow_call:
     inputs:
-      project:
-        required: true
-        type: string
       folder:
         type: string
         default: "path/to"
@@ -14,13 +10,13 @@ on:
         type: string
         default: "hello-world.txt"
 
-
-    env:
-      FULL_PATH: "${{ inputs.folder }}/${{ inputs.file_name }}"
-
     secrets:
       SERVICE_ACCOUNT_KEY:
         required: true
+
+
+env:
+  FULL_PATH: "${{ inputs.folder }}/${{ inputs.file_name }}"
 
 
 jobs:
@@ -33,16 +29,25 @@ jobs:
     - uses: 'actions/checkout@v3'
 
     - name: 'Output contents'
-      run: cat "${{ inputs.folder }}/${{ inputs.file_name }}"
+      run: |
+        echo "${{ inputs.folder }}/${{ inputs.file_name }}"
+        echo `cat "${{ inputs.folder }}/${{ inputs.file_name }}"`
+
+    - name: 'Output my secret var'
+      run: |
+        echo "Service acct key: ${{ secrets.SERVICE_ACCOUNT_KEY }}"
 
 
   file-output-with-env:
     name: "Cat the file output with the env var"
     runs-on: ubuntu-latest
     environment: inherit
+    needs: file-output-no-env
 
     steps:
     - uses: 'actions/checkout@v3'
 
     - name: 'Output contents'
-      run: cat "${{ env.FULL_PATH }}"
+      run: |
+        echo "${{ env.FULL_PATH }}"
+        echo `cat "${{ env.FULL_PATH }}"`

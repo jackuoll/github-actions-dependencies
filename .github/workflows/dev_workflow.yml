@@ -6,10 +6,9 @@ on:
       - master
 
 jobs:
-  dev-workflow-jobs:
+  arbitrarily-named-workflow:
     uses: ./.github/workflows/actions.yml
     with:
-      project: gcp-wow-wwnz-cd-ml-dev
       folder: "path/to"
       file_name: "hello-world.txt"
     secrets:
