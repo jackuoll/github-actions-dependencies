@@ -1,0 +1,48 @@
+name: Workflow Jobs
+
+
+on:
+  workflow_call:
+    inputs:
+      project:
+        required: true
+        type: string
+      folder:
+        type: string
+        default: "path/to"
+      file_name:
+        type: string
+        default: "hello-world.txt"
+
+
+    env:
+      FULL_PATH: "${{ inputs.folder }}/${{ inputs.file_name }}"
+
+    secrets:
+      SERVICE_ACCOUNT_KEY:
+        required: true
+
+
+jobs:
+  file-output-no-env:
+    name: "Cat the file output without using the env var"
+    runs-on: ubuntu-latest
+    environment: inherit
+
+    steps:
+    - uses: 'actions/checkout@v3'
+
+    - name: 'Output contents'
+      run: cat "${{ inputs.folder }}/${{ inputs.file_name }}"
+
+
+  file-output-with-env:
+    name: "Cat the file output with the env var"
+    runs-on: ubuntu-latest
+    environment: inherit
+
+    steps:
+    - uses: 'actions/checkout@v3'
+
+    - name: 'Output contents'
+      run: cat "${{ env.FULL_PATH }}"

@@ -1,0 +1,16 @@
+name: Workflow
+
+on:
+  push:
+    branches:
+      - *
+
+jobs:
+  dev-workflow-jobs:
+    uses: ./.github/workflows/actions.yml
+    with:
+      project: gcp-wow-wwnz-cd-ml-dev
+      folder: "path/to"
+      file_name: "hello-world.txt"
+    secrets:
+      SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
