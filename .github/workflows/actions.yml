@@ -1,63 +1,32 @@
-name: Workflow Jobs
-
+name: Compile and upload vertex pipeline
 on:
   workflow_call:
     inputs:
-      folder:
+      environment:
+        required: true
         type: string
-        default: "path/to"
-      file_name:
+      tag:
+        default: latest
+        required: false
         type: string
-        default: "hello-world.txt"
-
+      model_name:
+        required: true
+        type: string
     secrets:
       SERVICE_ACCOUNT_KEY:
         required: true
-  workflow_dispatch:
-    inputs:
-      run-training:
-        description: 'Run Training'
-        required: false
-        type: boolean
-
-
-env:
-  FULL_PATH: "${{ inputs.folder }}/${{ inputs.file_name }}"
 
 
 jobs:
-  file-output-no-env:
-    name: "Cat the file output without using the env var"
+  vertex-pipeline-compile-and-upload:
+    name: Compile and Upload
     runs-on: ubuntu-latest
-    environment: inherit
-
+    environment:
+      name: ${{ inputs.environment }}
+    env:
+      ENVIRONMENT: ${{ inputs.environment }}
+      PIPELINE_BUCKET: "gs://cd-ml-vertex-pipelines-${{ inputs.environment }}"
+      MODEL_NAME: ${{ inputs.model_name }}
     steps:
-    - uses: 'actions/checkout@v3'
-
-    - name: 'Output contents'
-      run: |
-        echo "${{ inputs.folder }}/${{ inputs.file_name }}"
-        echo `cat "${{ inputs.folder }}/${{ inputs.file_name }}"`
-
-    - name: 'Output my secret var'
-      run: |
-        echo "Service acct key: ${{ secrets.SERVICE_ACCOUNT_KEY }}"
-
-
-  file-output-with-env:
-    name: "Cat the file output with the env var"
-    runs-on: ubuntu-latest
-    environment: inherit
-    needs: file-output-no-env
-
-    steps:
-    - uses: 'actions/checkout@v3'
-
-    - name: 'Output contents'
-      run: |
-        echo "${{ env.FULL_PATH }}"
-        echo `cat "${{ env.FULL_PATH }}"`
-
-    - name: 'Run Training'
-      if: ${{ inputs.run-training == true }}
-      run: echo "Training!"
+      - name: pp
+        run: "echo ${{ inputs.environment }}"

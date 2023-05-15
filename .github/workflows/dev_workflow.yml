@@ -1,15 +1,22 @@
-name: Workflow
+name: "DEV Workflow"
 
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
+    inputs:
+      run-training:
+        description: 'Run Training'
+        required: false
+        type: boolean
+
+env:
+  ENVIRONMENT: dev
+  PIPELINE_BUCKET: "gs://cd-ml-vertex-pipelines-dev"
+  MODEL_NAME: sales_forecasting_delivery
 
 jobs:
-  arbitrarily-named-workflow:
+  compile-vertex-pipeline-job:
+    name: "Compile and Upload"
     uses: ./.github/workflows/actions.yml
     with:
-      folder: "path/to"
-      file_name: "hello-world.txt"
-    secrets:
-      SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+      environment: ${{ env.ENVIRONMENT }}
+      model_name: ${{ env.MODEL_NAME }}
