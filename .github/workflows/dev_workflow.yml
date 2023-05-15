@@ -18,5 +18,5 @@ jobs:
     name: "Compile and Upload"
     uses: ./.github/workflows/actions.yml
     with:
-      environment: ${{ env.DAY_OF_WEEK }}
-      model_name: ${{ env.DAY_OF_WEEK }}
+      environment: "$DAY_OF_WEEK"
+      model_name: "$DAY_OF_WEEK"
