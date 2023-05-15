@@ -13,6 +13,12 @@ on:
     secrets:
       SERVICE_ACCOUNT_KEY:
         required: true
+  workflow_dispatch:
+    inputs:
+      run-training:
+        description: 'Run Training'
+        required: false
+        type: boolean
 
 
 env:
@@ -51,3 +57,7 @@ jobs:
       run: |
         echo "${{ env.FULL_PATH }}"
         echo `cat "${{ env.FULL_PATH }}"`
+
+    - name: 'Run Training'
+      if: ${{ inputs.run-training == true }}
+      run: echo "Training!"
