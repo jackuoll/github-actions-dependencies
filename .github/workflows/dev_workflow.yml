@@ -9,14 +9,12 @@ on:
         type: boolean
 
 env:
-  ENVIRONMENT: dev
-  PIPELINE_BUCKET: "gs://cd-ml-vertex-pipelines-dev"
-  MODEL_NAME: sales_forecasting_delivery
+  DAY_OF_WEEK: Monday
 
 jobs:
   compile-vertex-pipeline-job:
     name: "Compile and Upload"
     uses: ./.github/workflows/actions.yml
     with:
-      environment: "${{ env.ENVIRONMENT }}"
-      model_name: "${{ env.MODEL_NAME }}"
+      environment: ${{ env.DAY_OF_WEEK }}
+      model_name: ${{ env.DAY_OF_WEEK }}
