@@ -12,9 +12,6 @@ on:
       model_name:
         required: true
         type: string
-    secrets:
-      SERVICE_ACCOUNT_KEY:
-        required: true
 
 
 jobs:
